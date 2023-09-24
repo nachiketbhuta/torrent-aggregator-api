@@ -7,7 +7,7 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 
-app.get("/", async (req: Request, res: Response) => {
+app.get("/torrents", async (req: Request, res: Response) => {
   const query = "the lincoln lawyer";
   // res.send(await torrent1337x("the lincoln lawyer"));
   // res.send(await bitSearch("the lincoln lawyer"));
