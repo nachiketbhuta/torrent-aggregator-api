@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import { torrent1337x, bitSearch } from "./torrent-aggregator";
+import { torrent1337x, bitSearch, eztvTorrent } from "./torrent-aggregator";
 
 dotenv.config();
 
@@ -11,9 +11,12 @@ app.get("/", async (req: Request, res: Response) => {
   const query = "the lincoln lawyer";
   // res.send(await torrent1337x("the lincoln lawyer"));
   // res.send(await bitSearch("the lincoln lawyer"));
-  const promises = [torrent1337x(query), bitSearch(query)];
+  // console.log(await );
+  const promises = [torrent1337x(query), bitSearch(query), eztvTorrent(query)];
+  const results = (await Promise.all(promises)).flat(1);
+  console.log(results.length);
   res.send({
-    data: (await Promise.all(promises)).flat(1),
+    data: results,
   });
 });
 

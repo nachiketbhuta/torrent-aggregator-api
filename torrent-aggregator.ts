@@ -1,5 +1,5 @@
 import { load } from "cheerio";
-import axios, { AxiosRequestHeaders } from "axios";
+import axios from "axios";
 
 interface TorrentBasicKeys {
   name?: string;
@@ -164,6 +164,51 @@ export const bitSearch = async (query: string, page = "1") => {
         torrentLink: $(element).find(".links a").attr("href"),
         magnet: $(element).find(".links a").next().attr("href"),
         category: $(element).find(".info div div a.category").text().trim(),
+      });
+    }
+  });
+
+  return torrents;
+};
+
+/* EZTV Torrent */
+export const eztvTorrent = async (query: string, page = "1") => {
+  const url = `https://eztv.re/search/${query}`;
+  let html;
+  try {
+    html = await axios.get(url);
+  } catch {
+    return null;
+  }
+
+  const $ = load(html.data);
+
+  let torrents: Torrent[] = [];
+  $("tbody tr.forum_header_border").each((_, element) => {
+    const url = $(element).find("td:nth-child(2)").find("a").attr("href") || "";
+    const name = $(element).find("td:nth-child(2)").find("a").text() || "";
+    if (url !== "" || name !== "") {
+      if (
+        !name.match(
+          new RegExp(query.replace(/(\W|\s)/gi, "(\\W|\\s|).?"), "ig")
+        )
+      ) {
+        return;
+      }
+      torrents.push({
+        name: name,
+        size: $(element).find("td:nth-child(4)").text().trim(),
+        dateUploaded: $(element).find("td:nth-child(5)").text().trim(),
+        seeders: Number($(element).find("td:nth-child(6)").text().trim()),
+        url: `https://eztv.io${url}`,
+        torrentLink: $(element)
+          .find("td:nth-child(3)")
+          .find("a.download_1")
+          .attr("href"),
+        magnet: $(element)
+          .find("td:nth-child(3)")
+          .find("a.magnet")
+          .attr("href"),
       });
     }
   });
