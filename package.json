@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && npx tsc",
     "start": "nodemon src/index.ts",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "add-build": "git add dist",
