@@ -27,7 +27,7 @@ app.get("/torrents", (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const results = (yield Promise.all(promises)).flat(1);
     console.log(results.length);
     res.send({
-        data: results,
+        data: results.filter((res) => res !== null),
     });
 }));
 app.listen(port, () => {

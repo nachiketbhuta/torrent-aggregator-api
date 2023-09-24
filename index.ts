@@ -16,7 +16,7 @@ app.get("/torrents", async (req: Request, res: Response) => {
   const results = (await Promise.all(promises)).flat(1);
   console.log(results.length);
   res.send({
-    data: results,
+    data: results.filter((res) => res !== null),
   });
 });
 
