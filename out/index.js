@@ -21,7 +21,7 @@ const app = (0, express_1.default)();
 const port = process.env.PORT;
 let cache = apicache_1.default.middleware;
 app.use(cache("30 minutes"));
-app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/torrents", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let query = req.query.query;
     const promises = [
         (0, torrent_aggregator_1.torrent1337x)(query),

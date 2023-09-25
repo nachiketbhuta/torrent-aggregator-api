@@ -30,7 +30,7 @@ const port = process.env.PORT;
 let cache = apicache.middleware;
 app.use(cache("30 minutes"));
 
-app.get("/", async (req: Request, res: Response) => {
+app.get("/torrents", async (req: Request, res: Response) => {
   let query: string = req.query.query as string;
   const promises = [
     torrent1337x(query),
