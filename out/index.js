@@ -41,7 +41,13 @@ app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         (0, torrent_aggregator_1.torrentProject)(query),
         (0, torrent_aggregator_1.zooqle)(query),
     ];
-    const results = (yield Promise.all(promises)).flat(1);
+    let results = [];
+    try {
+        results = (yield Promise.all(promises)).flat(1);
+    }
+    catch (error) {
+        console.log(error);
+    }
     // Sorting based on Seeders
     results.sort((a, b) => (b.seeders || 0) - (a.seeders || 0));
     res.send({

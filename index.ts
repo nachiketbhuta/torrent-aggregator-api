@@ -50,7 +50,13 @@ app.get("/", async (req: Request, res: Response) => {
     torrentProject(query),
     zooqle(query),
   ];
-  const results = (await Promise.all(promises)).flat(1);
+
+  let results: any[] = [];
+  try {
+    results = (await Promise.all(promises)).flat(1);
+  } catch (error) {
+    console.log(error);
+  }
 
   // Sorting based on Seeders
   results.sort(
