@@ -2,15 +2,15 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/index.js",
+      "src": "out/index.js",
       "use": "@vercel/node",
-      "config": { "includeFiles": ["dist/**"] }
+      "config": { "includeFiles": ["out/**"] }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "dist/index.js"
+      "dest": "out/index.js"
     }
   ]
 }

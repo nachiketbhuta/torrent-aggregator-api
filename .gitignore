@@ -89,7 +89,6 @@ web_modules/
 
 # Next.js build output
 .next
-out
 
 # Nuxt.js build / generate output
 .nuxt
@@ -146,3 +145,4 @@ package-lock.json
 torrent
 .DS_Store
 .vercel
+dist
