@@ -962,3 +962,142 @@ export const zooqle = async (query = "", page = "1") => {
   });
   return torrents;
 };
+
+export const combineAllTorrents = async (query: string, page: string = "1") => {
+  let comboTorrent: any[] = [],
+    timeout = 2500; //wait time before rejecting promised results
+  await Promise.allSettled([
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(torrent1337x(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(limeTorrents(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(torrentGalaxy(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(rarbgTorrents(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(zooqle(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(kickassTorrents(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(torLock(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(nyaaSITorrents(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(bitSearch(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(eztvTorrent(query))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(pirateBayTorrents(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(magnetDLTorrents(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(torrentFunk(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(glodLSTorrents(query, page))),
+    ]),
+    Promise.race([
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject({ code: 408, message: "Timeout exceeded" });
+        }, timeout)
+      ),
+      new Promise((resolve, _) => resolve(torrentProject(query, page))),
+    ]),
+  ])
+    .then((comboResult) => {
+      comboTorrent = comboResult
+        .filter((element) => element.status === "fulfilled" && element.value)
+        .map((element) => {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          return (element as PromiseFulfilledResult).value;
+        });
+    })
+    .catch((err) => console.log(err));
+
+  return comboTorrent;
+};

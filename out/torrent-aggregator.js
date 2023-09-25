@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.zooqle = exports.torrentProject = exports.torrentGalaxy = exports.torrentFunk = exports.torLock = exports.rarbgTorrents = exports.pirateBayTorrents = exports.nyaaSITorrents = exports.limeTorrents = exports.glodLSTorrents = exports.kickassTorrents = exports.ettvTorrents = exports.magnetDLTorrents = exports.eztvTorrent = exports.bitSearch = exports.torrent1337x = void 0;
+exports.combineAllTorrents = exports.zooqle = exports.torrentProject = exports.torrentGalaxy = exports.torrentFunk = exports.torLock = exports.rarbgTorrents = exports.pirateBayTorrents = exports.nyaaSITorrents = exports.limeTorrents = exports.glodLSTorrents = exports.kickassTorrents = exports.ettvTorrents = exports.magnetDLTorrents = exports.eztvTorrent = exports.bitSearch = exports.torrent1337x = void 0;
 const cheerio_1 = require("cheerio");
 const axios_1 = __importDefault(require("axios"));
 /* 1337x.to */
@@ -877,3 +877,110 @@ const zooqle = (query = "", page = "1") => __awaiter(void 0, void 0, void 0, fun
     return torrents;
 });
 exports.zooqle = zooqle;
+const combineAllTorrents = (query, page = "1") => __awaiter(void 0, void 0, void 0, function* () {
+    let comboTorrent = [], timeout = 2500; //wait time before rejecting promised results
+    yield Promise.allSettled([
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.torrent1337x)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.limeTorrents)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.torrentGalaxy)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.rarbgTorrents)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.zooqle)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.kickassTorrents)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.torLock)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.nyaaSITorrents)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.bitSearch)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.eztvTorrent)(query))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.pirateBayTorrents)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.magnetDLTorrents)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.torrentFunk)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.glodLSTorrents)(query, page))),
+        ]),
+        Promise.race([
+            new Promise((_, reject) => setTimeout(() => {
+                reject({ code: 408, message: "Timeout exceeded" });
+            }, timeout)),
+            new Promise((resolve, _) => resolve((0, exports.torrentProject)(query, page))),
+        ]),
+    ])
+        .then((comboResult) => {
+        comboTorrent = comboResult
+            .filter((element) => element.status === "fulfilled" && element.value)
+            .map((element) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            return element.value;
+        });
+    })
+        .catch((err) => console.log(err));
+    return comboTorrent;
+});
+exports.combineAllTorrents = combineAllTorrents;
