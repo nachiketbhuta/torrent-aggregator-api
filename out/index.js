@@ -21,7 +21,7 @@ const app = (0, express_1.default)();
 const port = process.env.PORT;
 let cache = apicache_1.default.middleware;
 app.use(cache("30 minutes"));
-app.get("/torrents", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let query = req.query.query;
     let results = [];
     try {
@@ -36,9 +36,6 @@ app.get("/torrents", (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.send({
         data: results.filter((res) => res !== null),
     });
-}));
-app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send("Welcome to Torrent Search Engine API");
 }));
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);

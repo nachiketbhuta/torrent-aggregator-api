@@ -13,7 +13,7 @@ const port = process.env.PORT;
 let cache = apicache.middleware;
 app.use(cache("30 minutes"));
 
-app.get("/torrents", async (req: Request, res: Response) => {
+app.get("/", async (req: Request, res: Response) => {
   let query: string = req.query.query as string;
   let results = [];
   try {
@@ -31,10 +31,6 @@ app.get("/torrents", async (req: Request, res: Response) => {
   res.send({
     data: results.filter((res) => res !== null),
   });
-});
-
-app.get("/", async (req: Request, res: Response) => {
-  res.send("Welcome to Torrent Search Engine API");
 });
 
 app.listen(port, () => {
