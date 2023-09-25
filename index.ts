@@ -68,6 +68,10 @@ app.get("/torrents", async (req: Request, res: Response) => {
   });
 });
 
+app.get("/", async (req: Request, res: Response) => {
+  res.send("Welcome to Torrent Search Engine API");
+});
+
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
 });

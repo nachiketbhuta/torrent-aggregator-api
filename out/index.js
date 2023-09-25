@@ -54,6 +54,9 @@ app.get("/torrents", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         data: results.filter((res) => res !== null),
     });
 }));
+app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.send("Welcome to Torrent Search Engine API");
+}));
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
