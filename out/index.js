@@ -14,11 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const cors = require("cors");
 const torrent_aggregator_1 = require("./torrent-aggregator");
 const apicache_1 = __importDefault(require("apicache"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT;
+app.use(cors());
 let cache = apicache_1.default.middleware;
 app.use(cache("30 minutes"));
 app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

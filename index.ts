@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+const cors = require("cors");
 import { combineAllTorrents } from "./torrent-aggregator";
 
 import Torrent from "./types";
@@ -9,6 +10,8 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
+
+app.use(cors());
 
 let cache = apicache.middleware;
 app.use(cache("30 minutes"));
